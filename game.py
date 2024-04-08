@@ -92,7 +92,7 @@ class Game:
     # Returns the winner's corresponding letter, or None if there was a draw
     def play(self) -> Optional[str]:
         while True:
-            self.take_turn()
+            self._take_turn()
 
             winner = check_winner(self.board)
 
@@ -104,7 +104,7 @@ class Game:
                 return None
 
     # Prompts the appropriate player to take their turn and updates the board accordingly
-    def take_turn(self):
+    def _take_turn(self):
         print_board(self.board)
 
         if self.turn == self.human:
@@ -126,7 +126,7 @@ class Game:
         else:
             print("CPU's turn.")
 
-            row, col = self.minimax()
+            row, col = self._minimax()
             self.board[row][col] = self.cpu
 
             self.turn = self.human
@@ -134,7 +134,7 @@ class Game:
         print("\n=================================\n")
 
     # Returns the optimal move (row, col)
-    def minimax(self) -> Tuple[int, int]:
+    def _minimax(self) -> Tuple[int, int]:
         row, col, max_value = 0, 0, float('-inf')
 
         for i in range(3):
@@ -145,7 +145,7 @@ class Game:
                 new_board = copy_board(self.board)
                 new_board[i][j] = self.cpu
 
-                value = self.dfs(new_board, self.human)
+                value = self._dfs(new_board, self.human)
                 
                 if value > max_value:
                     row, col, max_value = i, j, value
@@ -153,7 +153,7 @@ class Game:
         return row, col
 
     # Returns the minimax value of the provided board, starting on 'player's turn
-    def dfs(self, board: List[List], player: str) -> int:
+    def _dfs(self, board: List[List], player: str) -> int:
         winner = check_winner(board)
 
         if winner:
@@ -174,7 +174,7 @@ class Game:
                     new_board = copy_board(board)
                     new_board[i][j] = self.cpu
                     
-                    max_value = max(max_value, self.dfs(new_board, switch_player(self.cpu)))
+                    max_value = max(max_value, self._dfs(new_board, switch_player(self.cpu)))
             
             return max_value
         # Human player's turn
@@ -189,6 +189,6 @@ class Game:
                     new_board = copy_board(board)
                     new_board[i][j] = self.human
 
-                    min_value = min(min_value, self.dfs(new_board, switch_player(self.human)))
+                    min_value = min(min_value, self._dfs(new_board, switch_player(self.human)))
 
             return min_value
