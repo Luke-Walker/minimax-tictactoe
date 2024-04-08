@@ -6,11 +6,11 @@ def main():
     while True:
         user_input = ""
 
-        while user_input not in ['X', 'O', 'q']:
+        while user_input not in ['X', 'O']:
             user_input = input("Enter 'X' or 'O' ('q' to quit): ")
 
-        if user_input == 'q':
-            return
+            if user_input == 'q':
+                return
 
         print("\n=================================\n")
 
