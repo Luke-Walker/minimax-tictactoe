@@ -6,10 +6,10 @@ def switch_player(player: str) -> str:
 
 class Game:
 
-    def __init__(self, player: str):
+    def __init__(self, human: str):
         self.board = [[' ' for _ in range(3)] for _ in range(3)]
-        self.human = player
-        self.cpu = switch_player(player)
+        self.human = human
+        self.cpu = switch_player(human)
         self.turn = 'X'
 
     # Game loop
