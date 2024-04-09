@@ -143,6 +143,10 @@ class Game:
                 new_board = _copy_board(self.board)
                 new_board[i][j] = self.cpu
 
+                # Check if immediate move is a winner
+                if _check_winner(new_board) == self.cpu:
+                    return i, j
+
                 value = self._dfs(new_board, self.human)
                 
                 if value > max_value:
